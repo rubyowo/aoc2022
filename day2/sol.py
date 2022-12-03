@@ -1,82 +1,59 @@
 opp = {
     'A': 1,
     'B': 2,
-    'C': 3,
+    'C': 3
 }
 
 you = {
-    'X': 1,
-    'Y': 2,
-    'Z': 3,
+     'X': 1,
+     'Y': 2,
+     'Z': 3
 }
 
-# Part 1 logic
-def rps_logic(op, yu):
-    if(op == 1 and yu == 2):
-        return 2+6
-    elif(op == 1 and yu == 3):
-        return 3+0
-    elif(op == 1 and yu == 1):
-        return 1+3
+winning = {
+    'Y': 1,
+    'Z': 2,
+    'X': 3,
+} # Paper(Y) wins against Rock(A), Scissors(Z) wins against Paper(B), Rock(X) wins against Scissors(C).
 
-    elif(op == 2 and yu == 3):
-        return 3+6
-    elif(op == 2 and yu == 1):
-        return 1+0
-    elif(op == 2 and yu == 2):
-        return 2+3
-
-    elif(op == 3 and yu == 1):
-        return 1+6
-    elif(op == 3 and yu == 2):
-        return 2+0
-    elif(op == 3 and yu == 3):
-        return 6
-
-# Part 2 logic
-round_outcomes = {
-        'X': 0,
-        'Y': 3,
-        'Z': 6
+outcomes = {
+    'X': 0,
+    'Y': 3,
+    'Z': 6
 }
 
-def rps_logic2(op, ou):
-    if(op == 1 and ou == 0):
-        return 3+0
-    elif(op == 1 and ou == 3):
-        return 1+3
-    elif(op == 1 and ou == 6):
-        return 2+6
+# Scuffed, I know but w/e
+results = {
+    "A X":0+3,
+    "A Y":3+1,
+    "A Z":6+2,
+    "B X":0+1,
+    "B Y":3+2,
+    "B Z":6+3,
+    "C X":0+2,
+    "C Y":3+3,
+    "C Z":6+1,
+}
 
-    elif(op == 2 and ou == 0):
-        return 1+0
-    elif(op == 2 and ou == 3):
-        return 2+3
-    elif(op == 2 and ou == 6):
-        return 3+6
+def part1(data):
+    points = 0
+    for line in data:
+        f, s = line.split()
+        if opp.get(f) == you.get(s):
+            points += outcomes['Y']
+        elif opp.get(f) == winning.get(s):
+            points += outcomes['Z']
+        # Don't do anything if you lose since its just desicion+0.
+        points += you.get(s)
+    print(points)
 
-    elif(op == 3 and ou == 0):
-        return 2+0
-    elif(op == 3 and ou == 3):
-        return 3+3
-    elif(op == 3 and ou == 6):
-        return 1+6
+def part2(data):
+    points = 0
+    for line in data:
+        points += results[line]
+    print(points)
 
 with open('input', 'r') as f:
-    final_score = 0
-    final_score2 = 0
-
-    for line in f.read().strip().split("\n"):
-
-        first_col = opp.get(line[0])
-
-        # Part 1
-        second_col = you.get(line[2])
-        final_score += rps_logic(first_col, second_col)
-
-        # Part 2
-        second_col2 = round_outcomes.get(line[2])
-        final_score2 += rps_logic2(first_col, second_col2)
-
-    print(final_score)
-    print(final_score2)
+    data = f.read().strip().splitlines()
+    part1(data)
+    part2(data)
