@@ -6,15 +6,12 @@ def both(data):
         r1n1, r1n2 = r1.split("-")
         r2n1, r2n2 = r2.split("-")
     
-        r1nums = []
-        [r1nums.append(num) for num in range(int(r1n1), int(r1n2)+1)]
+        r1nums = list(num for num in range(int(r1n1), int(r1n2)+1))
 
-        r2nums = []
-        [r2nums.append(num) for num in range(int(r2n1), int(r2n2)+1)]
+        r2nums = list(num for num in range(int(r2n1), int(r2n2)+1))
         
         if((r1nums[0] in r2nums and r1nums[-1] in r2nums) or (r2nums[0] in r1nums and r2nums[-1] in r1nums)):
             pairsp1 += 1
-        
         if(r1nums[0] in r2nums or r2nums[0] in r1nums):
             pairsp2 += 1
 
